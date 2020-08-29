@@ -1,0 +1,40 @@
+package com.example.info.security;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+
+import com.example.info.domain.MemberVO;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class CustomUser extends User{
+	private static final long serialVersionUID = 1L;
+	
+	private MemberVO member;
+	
+	public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+		super(username, password, authorities);
+	}
+	
+	public CustomUser(MemberVO vo) {
+		super(vo.getEmail(), vo.getPassword(),vo.getAuth().stream()
+				.map(auth-> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList())
+				);
+		this.member = vo;
+	}
+
+	public CustomUser(String username, String password, boolean enabled, boolean accountNonExpired,
+			boolean credentialsNonExpired, boolean accountNonLocked,
+			Collection<? extends GrantedAuthority> authorities) {
+		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+		// TODO Auto-generated constructor stub
+	}
+	
+}
