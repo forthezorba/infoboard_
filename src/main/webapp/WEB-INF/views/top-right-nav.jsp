@@ -15,7 +15,6 @@
 		<!-- Nav Item - User Information -->
 		<li class="nav-item dropdown no-arrow">
 			<span class="mr-2 d-none d-lg-inline text-gray-600 small"> 
-					
 					<sec:authorize access="isAnonymous()">
 						<li><a href="/user/login">Login</a></li>
 					</sec:authorize> 
@@ -24,11 +23,10 @@
 						<li><a href="/user/signup">SignUp</a></li>
 					</sec:authorize> 
 					
-					<sec:authorize access="isAuthenticated()">
-						<li><sec:authentication property="principal.username" /></li>
-					</sec:authorize>
+					<li>${user.name}</li>
 					
-					<sec:authorize access="isAuthenticated()">
+					
+					<sec:authorize access="isAuthenticated()">               
 						<form action="/user/logout" method="post" role="form"
 							id="actionForm">
 							<li class="logout_btn"><a>Logout</a></li> 

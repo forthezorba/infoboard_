@@ -11,6 +11,7 @@ public class MemberVO {
 	private String name;
     private String email;
     private String password;
+    private String picture;
     private Boolean enabled;
     private Date reg_date;
     //private LocalDateTime createdDate;

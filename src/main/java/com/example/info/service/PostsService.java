@@ -1,3 +1,4 @@
+package com.example.info.service;
 //package com.example.info.service.posts;
 //
 //import javax.transaction.Transactional;

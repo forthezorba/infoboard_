@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.info.domain.AuthVO;
 import com.example.info.domain.MemberVO;
+import com.example.info.domain.User;
 @Repository("com.example.info.mapper.MemberMapper")
 public interface MemberMapper { 
 	public MemberVO read(String userEmail);

@@ -75,12 +75,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <insert id="boardInsert" parameterType="com.example.info.domain.BoardVO">
+        <selectKey keyProperty="ref" order="BEFORE" resultType="int">
+				select nvl(max(bno)+1, 1) from BOARD
+		</selectKey>
         INSERT INTO
 	        BOARD (BNO,REF,REPLY,SUBJECT,CONTENT,WRITER,NAME,REG_DATE)
-	        <selectKey keyProperty="ref" order="BEFORE" resultType="int">
-				select nvl(max(bno)+1, 1) from BOARD
-			</selectKey>
-	        VALUES(#{bno},#{ref},#{reply},#{subject},#{content},#{writer},#{name},now()) 
+	        VALUES(#{ref},#{ref},#{reply},#{subject},#{content},#{writer},#{name},now()) 
     </insert>
     
     <insert id="boardReInsert" parameterType="com.example.info.domain.BoardVO">

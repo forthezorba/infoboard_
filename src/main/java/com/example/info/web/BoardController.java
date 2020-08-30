@@ -1,7 +1,10 @@
 package com.example.info.web;
 
+import java.security.Principal;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +15,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.info.domain.BoardVO;
 import com.example.info.domain.Criteria;
-import com.example.info.service.posts.BoardService;
+import com.example.info.security.SessionUser;
+import com.example.info.service.BoardService;
+import com.example.info.service.MemberService;
 
+import lombok.RequiredArgsConstructor;
+@RequiredArgsConstructor
 @Controller
 public class BoardController {
 	@Resource(name="com.example.info.service.BoardService")
     BoardService mBoardService;
-	
+	@Resource
+	private MemberService memberService;
+    private final HttpSession httpSession;
+
 	@GetMapping("/tables")
 	private String tables(Model model) throws Exception{
         
@@ -34,14 +44,16 @@ public class BoardController {
 	@RequestMapping("/dashBoard")
 	private String dashBoard(Model model) throws Exception{
 		
-		System.out.println(mBoardService.dashInfo());
 		model.addAttribute("dash",mBoardService.dashInfo());
 		return "sb_dashBoard"; 
 	}
 	
 	@GetMapping("/")
-	private String mainPage(Model model) throws Exception{
-        
+	private String mainPage(Model model,Principal principal) throws Exception{
+        SessionUser user = (SessionUser)httpSession.getAttribute("user");
+        if(user!=null) {
+        	model.addAttribute("user",user);
+        }
         model.addAttribute("list", mBoardService.boardListService());
         return "sb_list"; 
     }

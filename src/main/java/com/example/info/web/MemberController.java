@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.info.domain.MemberVO;
-import com.example.info.service.posts.MemberService;
+import com.example.info.service.MemberService;
 
 
 @Controller
@@ -33,9 +33,10 @@ public class MemberController {
 		String userId = principal.getName();
 		if(userId.equals("admin@naver.com")){
 			model.addAttribute("list", memberService.read_all_member());
-		}else {
-			model.addAttribute("user", memberService.read_member(userId));	
 		}
+//		else {
+//			model.addAttribute("user", memberService.read_member(userId));	
+//		}
 		
 		return "sb_userInfo";
 	}
@@ -60,7 +61,7 @@ public class MemberController {
 	// 로그인 페이지
 	@GetMapping("/user/login")
 	public String dispLogin() {
-		return "login";
+		return "/";
 	}
 //
 //	// 로그인 결과 페이지

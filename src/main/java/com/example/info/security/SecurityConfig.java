@@ -14,9 +14,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@Configuration
+@Configuration   
+@RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Setter(onMethod_ = {@Autowired})
@@ -29,27 +31,48 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public UserDetailsService customUserService() {
 		return new CustomUserDetailsService();
 	}
+    private final CustomOAuth2UserService customOAuth2userService;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-        .authorizeRequests()
-        	.antMatchers("/","/user/signup","/list").permitAll() // "/", "/hello" 는 인증정보 필요 없음.
-            .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/assets/**","/fonts/**","/dis/**","/vendor/**").permitAll()
-            .anyRequest()
-            .fullyAuthenticated()
+		http.csrf().disable()
+        .headers().frameOptions().disable()
             .and()
-        .formLogin()
-        	.successHandler(successHandler)
-            .failureUrl("/login?error").failureHandler(authenticationFailureHandler)
-            .permitAll()
+                .authorizeRequests()
+                .antMatchers("/","/user/signup").permitAll()
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/assets/**","/fonts/**","/dis/**","/vendor/**").permitAll()
+                .anyRequest().authenticated()
             .and()
-        .logout()
-            .logoutUrl("/user/logout")
-            .logoutSuccessUrl("/login")
-            .permitAll()
+            	.formLogin()
+            		.successHandler(successHandler)
+            			.failureUrl("/login?error").failureHandler(authenticationFailureHandler)
             .and()
-        .csrf();
+	            .logout()
+		            .logoutUrl("/user/logout")
+		            	.logoutSuccessUrl("/login")
+            .and()
+                .oauth2Login()
+                    .userInfoEndpoint()
+                        .userService(customOAuth2userService);
+		
+//		http
+//        .authorizeRequests()
+//        	.antMatchers("/","/user/signup","/list").permitAll() // "/", "/hello" 는 인증정보 필요 없음.
+//            .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/assets/**","/fonts/**","/dis/**","/vendor/**").permitAll()
+//            .anyRequest()
+//            .fullyAuthenticated()
+//            .and()
+//        .formLogin()
+//        	.successHandler(successHandler)
+//            .failureUrl("/login?error").failureHandler(authenticationFailureHandler)
+//            .permitAll()
+//            .and()
+//        .logout()
+//            .logoutUrl("/user/logout")
+//            .logoutSuccessUrl("/login")
+//            .permitAll()
+//            .and()
+//        .csrf();
 	}
 	
 	

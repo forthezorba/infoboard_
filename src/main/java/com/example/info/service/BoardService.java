@@ -1,4 +1,4 @@
-package com.example.info.service.posts;
+package com.example.info.service;
 
 import java.util.List;
 
