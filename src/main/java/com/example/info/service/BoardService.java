@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.info.domain.BoardVO;
@@ -11,9 +12,11 @@ import com.example.info.domain.Criteria;
 import com.example.info.domain.DashInfo;
 import com.example.info.mapper.BoardMapper;
 
+import lombok.Setter;
+
 @Service("com.example.info.service.BoardService")
 public class BoardService {
-    @Resource(name="com.example.info.mapper.BoardMapper")
+	@Setter(onMethod_=@Autowired)
     BoardMapper mBoardMapper;
     
     public int boardCount() throws Exception{

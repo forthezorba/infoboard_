@@ -36,10 +36,6 @@ public interface BoardMapper {
 
     //dash
     public DashInfo dashInfo() throws Exception;
-    public int totalboard() throws Exception;
-    public int totalusers() throws Exception;
-    public int unanswered() throws Exception;
-    public int newboard() throws Exception;
 
 }
 
