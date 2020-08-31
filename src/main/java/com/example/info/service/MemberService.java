@@ -24,7 +24,12 @@ public class MemberService{
 		vo.setPassword(passwordEncoder.encode(vo.getPassword()));
     	AuthVO auth = new AuthVO();
     	auth.setEmail(vo.getEmail());
-    	auth.setAuth("ROLE_MEMBER");
+    	if(vo.getEmail().equals("admin@naver.com")) {
+        	auth.setAuth("ROLE_ADMIN");
+    	}else {
+    		auth.setAuth("ROLE_MEMBER");	
+    	}
+    	
 		
 		memberMapper.insert_member(vo);
 		memberMapper.insert_auth(auth);

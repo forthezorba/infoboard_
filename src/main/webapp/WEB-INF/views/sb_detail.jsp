@@ -104,8 +104,11 @@
 						<th scope="row" class="table-light">내용</th>
 					</tr>
 					<tr>
-						<td style="height: 20vh;">${detail.content}</td>
-					</tr>
+						
+						<td style="height: 20vh;">
+							<pre><c:out value="${detail.content}" /></pre>
+						</td>
+					</tr>	
                   </tbody>
                 </table>
                 
