@@ -45,13 +45,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             	.formLogin()
             		.successHandler(successHandler)
-            			.failureUrl("/login?error").failureHandler(authenticationFailureHandler)
+            			.failureHandler(authenticationFailureHandler)
             .and()
 	            .logout()
 		            .logoutUrl("/user/logout")
 		            	.logoutSuccessUrl("/login")
             .and()
                 .oauth2Login()
+                	.defaultSuccessUrl("/")
                     .userInfoEndpoint()
                         .userService(customOAuth2userService);
 		

@@ -88,7 +88,7 @@
 		            </tr>
                   </thead>
                   <tbody>
-                  
+                  <%--
                 	  <c:forEach var="l" items="${list}" varStatus="sta">
                 	 	<tr>
 	                     	<td>
@@ -101,6 +101,7 @@
 									pattern="yyyy.MM.dd" /></td>
                   	 	</tr>
                  	 </c:forEach>
+                ` --%>
                  	 
                  	 <c:if test="${user != null}">
                 	 <tr>
