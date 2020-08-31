@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <insert id="boardInsert" parameterType="com.example.info.domain.BoardVO">
         <selectKey keyProperty="ref" order="BEFORE" resultType="int">
-				select nvl(max(bno)+1, 1) from BOARD
+				select ifnull(max(bno)+1, 1) from BOARD
 		</selectKey>
         INSERT INTO
 	        BOARD (BNO,REF,REPLY,SUBJECT,CONTENT,WRITER,NAME,REG_DATE)
