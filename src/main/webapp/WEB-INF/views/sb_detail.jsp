@@ -152,7 +152,8 @@
 			               <label for="content">내용</label>
 			               <textarea class="form-control" rows="7" id="content" name="content"></textarea>
 			              </div>
-			              <button type="button" class="btn btn-primary addReplyBtn"  data-bno="${detail.bno}" data-rno="${reply.rno}">Submit</button>
+			              <button type="button" class="btn btn-primary addReplyBtn"  data-bno="${detail.bno}" data-rno="${reply.rno}">등록</button>
+			              <button type="button" class="btn btn-secondary cancelReplyBtn"  data-bno="${detail.bno}" data-rno="${reply.rno}">취소</button>
 			            </form>
 			            <input class="form-control" type="hidden" id="rno" name="rno" />
 			            <input class="form-control" type="hidden" id="bno" name="bno" />
@@ -248,7 +249,12 @@ $(document).ready(function(){
 		 $('.write-form').hide();
 		 $('.write-form-btn').hide();
  	 }
+	 $('.write-form').on('click','.cancelReplyBtn',function(e){
+		 $('.write-form').hide();
+		 $('.read-form').show();
+	 });
 
+		
   	//등록
   	$('.addReplyBtn').on('click',function(e){
 		e.stopPropagation();
