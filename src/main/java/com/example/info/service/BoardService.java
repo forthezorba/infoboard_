@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.info.domain.BoardVO;
 import com.example.info.domain.Criteria;
 import com.example.info.domain.DashInfo;
+import com.example.info.domain.ReplyVO;
 import com.example.info.mapper.BoardMapper;
 
 import lombok.Setter;
@@ -28,6 +29,8 @@ public class BoardService {
         return mBoardMapper.boardList();
     }
     
+   
+    
     public List<BoardVO> boardListServiceWithCri(Criteria cri) throws Exception{
     	return mBoardMapper.boardListWithCri(cri);
     }
@@ -42,10 +45,37 @@ public class BoardService {
         return mBoardMapper.boardInsert(board);
     }
     
-    public int boardReInsertService(BoardVO board) throws Exception{
-        
-        return mBoardMapper.boardReInsert(board);
+    
+    
+    
+    
+    public List<ReplyVO> replyListService() throws Exception{
+    	
+    	return mBoardMapper.replyList();
     }
+    public int boardReInsertService(ReplyVO reply) throws Exception{
+        
+        return mBoardMapper.boardReInsert(reply);
+    }
+    public int replyModify(ReplyVO reply) throws Exception{
+    	
+    	return mBoardMapper.replyModify(reply);
+    }
+    public int boardReRemoveService(int rno) throws Exception{
+    	
+    	return mBoardMapper.boardReRemove(rno);
+    }
+    
+    public ReplyVO replyRead(ReplyVO reply) throws Exception{
+    	
+    	return mBoardMapper.replyRead(reply);
+    }
+    
+    
+    
+    
+    
+    
     
     public int boardOriginUpdateService(BoardVO board) throws Exception{
     	

@@ -4,7 +4,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
  
 <mapper namespace="com.example.info.mapper.BoardMapper">
-    
+    <resultMap type="java.util.HashMap" id="hashmapVO">
+	</resultMap>
+	
     <select id="dashInfo" resultType="com.example.info.domain.DashInfo">
         SELECT 
 			(SELECT COUNT(bno) FROM board) AS totalBoard
@@ -28,11 +30,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM BOARD
     </select>
     
-    <select id="boardList" resultType="com.example.info.domain.BoardVO">
-        SELECT *
+    <select id="boardList" resultMap="hashmapVO">
+<!--         SELECT *
 	        FROM BOARD 
-	        ORDER BY REF DESC,BNO ASC
-    </select>
+	        ORDER BY REF DESC,BNO ASC -->
+	        
+	 SELECT  
+	 	b.bno as bBno,
+	 	b.ref as bRef,
+	 	b.reply as bReply,
+	 	b.subject as bSubject,
+	 	b.content as bContent,
+	 	b.writer as bWriter,
+	 	b.name as bName,
+	 	b.reg_date as bDate,
+	 	r.rno as rRno,
+	 	r.bno as rBno,
+	 	r.title as rTitle,
+	 	r.content as rContent,
+	 	r.reg_date as rDate
+	 FROM board b
+	 LEFT JOIN reply r on b.bno = r.bno
+	 ORDER BY bBno desc
+	 </select>
     
     
     <sql id="criteria">
@@ -71,7 +91,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             *
 	        FROM BOARD
 	        WHERE BNO = #{bno}
-            
     </select>
     
     <insert id="boardInsert" parameterType="com.example.info.domain.BoardVO">
@@ -83,15 +102,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        VALUES(#{ref},#{ref},#{reply},#{subject},#{content},#{writer},#{name},now()) 
     </insert>
     
-    <insert id="boardReInsert" parameterType="com.example.info.domain.BoardVO">
+    <!-- <insert id="boardReInsert" parameterType="com.example.info.domain.BoardVO">
         INSERT INTO
 	        BOARD (BNO,REF,REPLY,SUBJECT,CONTENT,WRITER,NAME,REG_DATE)
 	        VALUES(#{bno},#{ref},#{reply},#{subject},#{content},#{writer},#{name},now()) 
+    </insert> -->
+    <insert id="boardReInsert" parameterType="com.example.info.domain.ReplyVO">
+        INSERT INTO
+	        REPLY (BNO,TITLE,CONTENT,REG_DATE)
+	        VALUES(#{bno},#{title},#{content},now()) 
     </insert>
+  	<select id="replyList" resultType="com.example.info.domain.ReplyVO">
+        SELECT *
+	        FROM REPLY 
+    </select>
+  	<delete id="boardReRemove">
+        DELETE 
+	        FROM REPLY
+	        WHERE RNO=#{rno} 
+    </delete>
+    <update id="replyModify" parameterType="com.example.info.domain.ReplyVO">
+        UPDATE REPLY
+            SET
+       		<if test="title != null">
+            title = #{title},
+       	 	</if>
+       	 	<if test="content != null">
+            content = #{content}
+       	 	</if>
+        	WHERE RNO = #{rno}
+    </update>
+    
+    <select id="replyRead" parameterType="com.example.info.domain.ReplyVO" resultType="com.example.info.domain.ReplyVO">
+		select * from REPLY 
+		where 
+			<if test="bno != 0">
+            BNO=#{bno} 
+       	 	</if>
+			<if test="rno != 0">
+            AND RNO=#{rno}
+       	 	</if>
+			
+	</select>
     
     <update id="boardOriginUpdate" parameterType="com.example.info.domain.BoardVO">
         UPDATE BOARD
-	        SET REPLY = REPLY+1
+	        SET REPLY = (
+	        			SELECT COUNT(*)
+						FROM reply
+						WHERE bno=#{ref}
+						)
 	        WHERE BNO = #{ref}
     </update>
     

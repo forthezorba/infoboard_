@@ -41,6 +41,13 @@
           <span>나의 정보</span>
         </a>
       </li>
+      
+       <!-- Nav Item - home -->
+      <li class="nav-item">
+        <a class="nav-link" href="/homeTax/sb_homeTax">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Home Tax</span></a>
+      </li>
       <!-- Divider -->
       <hr class="sidebar-divider">
       

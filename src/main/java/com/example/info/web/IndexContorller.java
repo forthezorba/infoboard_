@@ -9,4 +9,10 @@ public class IndexContorller {
 	public String index() {
 		return "index";
 	}
+	
+	@GetMapping("/homeTax/sb_homeTax")
+	public String index_homeTax() {
+		System.out.println("home");
+		return "sb_homeTax";
+	}
 }

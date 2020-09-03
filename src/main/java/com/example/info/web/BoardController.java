@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.info.domain.BoardVO;
 import com.example.info.domain.Criteria;
+import com.example.info.domain.ReplyVO;
 import com.example.info.security.SessionUser;
 import com.example.info.service.BoardService;
 import com.example.info.service.MemberService;
@@ -54,6 +55,7 @@ public class BoardController {
         	model.addAttribute("user",user);
         }
         model.addAttribute("list", mBoardService.boardListService());
+        model.addAttribute("reply", mBoardService.replyListService());
         return "sb_list"; 
     }
     
@@ -67,13 +69,20 @@ public class BoardController {
     @RequestMapping("/detail/{bno}") 
     private String boardetail(@PathVariable int bno, Model model) throws Exception{
     	model.addAttribute("detail", mBoardService.boardDetailService(bno));
+    	
+    	ReplyVO vo = new ReplyVO();
+        vo.setBno(bno);
+        System.out.println(vo);
+    	model.addAttribute("reply", mBoardService.replyRead(vo));
+      	
     	return "sb_detail";
     }
+    
+    
+    
     @RequestMapping("/delete/{bno}")
     private String boardDelete(@PathVariable int bno) throws Exception{
-        
         mBoardService.boardDeleteService(bno);
-        
         return "redirect:/";
     }
     
@@ -101,7 +110,7 @@ public class BoardController {
         if(bno!=0) {
         	//답변
             board.setRef(bno);
-            mBoardService.boardReInsertService(board);
+            //mBoardService.boardReInsertService(board);
             mBoardService.boardOriginUpdateService(board);
         }else {
         	//문의글

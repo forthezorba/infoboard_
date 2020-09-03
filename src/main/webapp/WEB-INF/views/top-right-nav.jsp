@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- Topbar -->
 <nav
 	class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -23,7 +24,7 @@
 						<li><a href="/user/signup">SignUp</a></li>
 					</sec:authorize> 
 					
-					<li>${user.name}</li>
+					<li>${user.name} 님</li> 
 					
 					
 					<sec:authorize access="isAuthenticated()">               

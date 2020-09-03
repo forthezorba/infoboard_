@@ -91,7 +91,7 @@
 		          </div>
 		          <div class="form-group">
 		            <label for="content">내용</label>
-		            <textarea class="form-control" id="content" name="content" rows="3">${detail.content}</textarea>
+		            <textarea class="form-control" id="content" name="content" rows="10">${detail.content}</textarea>
 		          </div>
 		          <input type="hidden" name="bno" value="${detail.bno}"/>
 		          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
