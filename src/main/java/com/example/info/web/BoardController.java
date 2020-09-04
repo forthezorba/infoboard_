@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,10 +80,18 @@ public class BoardController {
     }
     
     
-    
+    @Transactional
     @RequestMapping("/delete/{bno}")
     private String boardDelete(@PathVariable int bno) throws Exception{
         mBoardService.boardDeleteService(bno);
+        
+        //게시글에 달린 댓글 삭제 
+        ReplyVO vo = new ReplyVO();
+        vo.setBno(bno);
+        vo = mBoardService.replyRead(vo);
+        if(vo!=null) {
+        	mBoardService.boardReRemoveService(vo.getRno());
+        }
         return "redirect:/";
     }
     

@@ -130,8 +130,9 @@
 			      	  </small>
 			          </h5>
 			          
-			          <div class="card-body re_content">
-			            ${reply.content}
+			          <div class="card-body re_content" style="white-space: pre-line;">
+			          	<c:out value="${reply.content}" />
+
 			          </div>
 			        </div>
 					<div class="float-right write-form-btn">				
@@ -155,8 +156,6 @@
 			              <button type="button" class="btn btn-primary addReplyBtn"  data-bno="${detail.bno}" data-rno="${reply.rno}">등록</button>
 			              <button type="button" class="btn btn-secondary cancelReplyBtn"  data-bno="${detail.bno}" data-rno="${reply.rno}">취소</button>
 			            </form>
-			            <input class="form-control" type="hidden" id="rno" name="rno" />
-			            <input class="form-control" type="hidden" id="bno" name="bno" />
 			          </div>
 			        </div>
 		        
@@ -237,19 +236,19 @@ $(document).ready(function(){
 	 var user = '<c:out value="${user.email}"/>';
 	 var isReply = '<c:out value="${reply.rno}"/>';
 
-	 if(isReply == ''){
+	 if(!isReply){
 		 $('.read-form').hide();
 	 }
-	 if(isReply !== ''){
+	 if(isReply){
 		 $('.write-form').hide();
 	 }
-	 console.log(user)
+
 	 if(user!=='admin@naver.com'){
-		 /* $('.chat').hide() */
 		 $('.write-form').hide();
 		 $('.write-form-btn').hide();
  	 }
 	 $('.write-form').on('click','.cancelReplyBtn',function(e){
+		 if(!$('.write-form .cancelReplyBtn').attr('data-rno'))return;
 		 $('.write-form').hide();
 		 $('.read-form').show();
 	 });
@@ -258,73 +257,73 @@ $(document).ready(function(){
   	//등록
   	$('.addReplyBtn').on('click',function(e){
 		e.stopPropagation();
-
-		//var bno=$(this).data('bno');
-		let rno = 0;
+		
 		var reply={
-				rno: $('.addReplyBtn').data('rno'),
-				bno: $('.addReplyBtn').data('bno'),
+				rno: $('.addReplyBtn').attr('data-rno'),
+				bno: $('.addReplyBtn').attr('data-bno'),
 				title: $('input[name="title"]').val(),
 				content: $('textarea[name="content"]').val(),
 		};
 
-		if(reply.rno===''){
+		console.log(reply)
+
+		if(!reply.rno){
+			console.log('reply add...')
 			replyService.add(reply, function(result){
-				callAPI(result);
+				create_read_form(result);
 			})
+			return
 		}
 
-		if(reply.rno!==''){
+		if(reply.rno){
+			console.log('reply update...')
 			replyService.update(reply, function(result){
-				callAPI(result);
+				create_read_form(result);
 			})
+			return
 		}
-		
-		
 		
 	});
 
 
     //삭제
 	$('.read-form').on('click','.removeBtn',function(e){
+		if(!confirm('삭제하시겠습니까?')){
+            return
+        }
 		var rno=$(this).data('rno');
 		var bno=$(this).data('bno');
 		var reply={
 				rno: rno,
 				bno: bno,
 		};
-		console.log(reply)
 		replyService.remove(reply,function(result){
-			console.log('result',result)
-			//showList(1);
 			$('.read-form').hide();
 			$('.write-form').show();
-
+			$('input[name="title"]').val('');
+			$('textarea[name="content"]').val('');
+			$('.write-form .addReplyBtn').attr('data-rno','');
+			$('.write-form .cancelReplyBtn').attr('data-rno','');
 		})
 		
 	})
 	//수정
 	$('.read-form').on('click','.modReplyBtn',function(e){
 		var rno=$(this).data('rno');
-		var bno=$(this).data('bno');
-		var title = $(this).parent().parent().parent().find('.re_title').text().trim();
-		var content = $(this).parent().parent().parent().find('.re_content').text().trim();
-		var reply={
-				rno: rno,
-				bno: bno,
-				title: title,
-				content: content
-		};
+		var title = $(this).parents().find('.re_title').text().trim();
+		var content = $(this).parents().find('.re_content').text().trim();
+
 		$('.read-form').hide();
 		$('.write-form').show();
-		$('.write-form').find('input[name="rno"]').val(rno);
+		$('.write-form .addReplyBtn').attr('data-rno',rno)
+		$('.write-form .cancelReplyBtn').attr('data-rno',rno)
 		$('.write-form #title').val(title);
 		$('.write-form #content').val(content);
 	})
 	
 
   	//form 
-	function callAPI(result){
+	function create_read_form(result){
 
 		var str='';
 		
@@ -334,13 +333,13 @@ $(document).ready(function(){
 			str += '<span class="re_title">'+result.title+'</span>'  
 			str += '<small class="float-right text-muted">'+replyService.displayTime(result.reg_date)+'</small>'  
 			str += '</h5>'  
-			str += '<div class="card-body re_content">'+result.content+'</div>'  
+			str += '<div class="card-body re_content" style="white-space: pre-line;">'+result.content+'</div>'  
 		str += '</div>'  
 			str += '<div class="float-right write-form-btn">'  
 
 			if(user==='admin@naver.com'){
+				str += '<button type="button" class="removeBtn btn btn-danger btn-sm mr-1" data-bno='+result.bno+' data-rno='+result.rno+' >삭제</button>'
 				str += "<button type='button' class='modReplyBtn btn btn-primary btn-sm' data-dismiss='modal' data-rno="+result.rno+"  data-bno="+result.rno+">수정</button>"  
-				str += '<button type="button" class="removeBtn btn btn-danger btn-sm ml-1" data-bno='+result.bno+' data-rno='+result.rno+' >삭제</button>'
 			}
 			str += '</div>'
         str += "</small></td>"

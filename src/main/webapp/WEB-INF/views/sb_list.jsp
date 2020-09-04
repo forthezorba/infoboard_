@@ -54,6 +54,9 @@ td{
 .btn_toggle{
 	cursor: initial !important;
 }
+.origin td{
+vertical-align: baseline !important;
+}
 
 </style>
 
@@ -82,6 +85,9 @@ td{
           <!-- Page Heading -->
           <h5 class="mb-2 text-gray-800 ">
           </h5>
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800 font-weight-bolder">문의</h1>
+          <p class="mb-4">board</p>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
          	 
@@ -337,10 +343,10 @@ $(document).ready(function(){
 		str += '<hr><div class="re_content">';
 		str += '<h5 class="font-weight-bold">';
 		str += '<i class="fab fa-replyd" style="font-size:2rem;"></i>';
-		str += '"'+reply.title+'"';
+		str += ''+reply.title+'';
 		str += '</h5>';
 		str += '<hr> ';
-		str += '"'+reply.content+'"';
+		str += ''+reply.content+'';
 		str += '</div>';
 		target.append(str)
 		

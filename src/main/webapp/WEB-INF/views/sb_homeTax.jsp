@@ -46,11 +46,38 @@
 	vertical-align: middle;
 }
 #result,#request{
-	background-color:#020935;
-	color:white;
 }
 </style>
+<style>
+table.type09 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
 
+}
+table.type09 thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;
+}
+table.type09 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #f3f6f7;
+}
+table.type09 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
+</style>
 </head>
 
 <body id="page-top">
@@ -76,7 +103,7 @@
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800 font-weight-bolder"></h1>
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">조회</h1>
+          <h1 class="h3 mb-2 text-gray-800 font-weight-bolder">조회</h1>
           <p class="mb-4">homeTax</p>
           
           <!-- DataTales Example -->
@@ -85,15 +112,43 @@
               <h6 class="m-0 font-weight-bold text-primary">   
 
                 <div class="row ml-1"> 
-	              	<input type="text" name="txprDscmNo" class="searchTax form-control bg-white border-0 small w-25" 
+	              	<input type="text" name="txprDscmNo" class="searchTax form-control mr-1 bg-white border-1 small w-25 font-weight-bold" 
 	              	placeholder="사업자 번호..." aria-label="Search" aria-describedby="basic-addon2">
-	              	<button class="btn btn-primary btn-sm searchTax" style="float:right;">조회</button>
+	              	<button class="btn btn-success btn-sm searchTaxBtn" style="float:right;">조회</button>
               	</div>
               </h6>
             </div>
-            <div class="card-body w-75">
-              <div class="table-responsive">
-                <table class="table table-borderless bg-light"  width="80%" cellspacing="0"> 
+            <div class="card-body">
+            
+            <table class="type09">
+			    <thead>
+			    <tr>
+			        <th scope="cols">요청</th>
+			        <th scope="cols">결과</th>
+			    </tr>
+			    </thead>
+			    <tbody>
+			    <tr>
+			        <th scope="row">
+			        <textarea id="request" name="request" rows="17" cols="50" class=" border-0" style="background-color: inherit;"></textarea>
+			        </th>
+			        <td>
+			        <textarea id="result" name="result" rows="17" cols="80" class="border-0" style="background-color: inherit;"></textarea>
+			        </td>
+			    </tr>
+			    </tbody>
+			</table>
+ <!--             <div class="table-responsive d-flex">
+ 					<div class="card text-white bg-dark mb-3" >
+				       <div class="card-header bg-primary font-weight-bold" style="font-size:1.3rem;">요청</div>
+				       <textarea id="request" name="request" rows="17" cols="50" class=" border-0" style="background-color:black;"></textarea>
+				    </div>
+					<div class="card text-white bg-dark mb-3" >
+				       <div class="card-header bg-primary font-weight-bold" style="font-size:1.3rem;">결과</div>
+				       <textarea id="result" name="result" rows="17" cols="80" class="border-0" style="background-color:black;"></textarea>
+				    </div> -->
+				    
+<!--                 <table class="table table-borderless bg-light"  width="80%" cellspacing="0"> 
                   <thead>
                     <tr class="">
 		                <th style="width:30%; font-size:2rem;">요청</th>
@@ -103,22 +158,27 @@
                   <tbody>
                  	 <tr  style="cursor: pointer;">
                  	      <th>
-                	      <textarea id="request" rows="17" cols="50"></textarea>
+                	      <textarea id="request" name="request" rows="17" cols="50"></textarea>
                  	      </th> 
                  	      <th>
-                	      <textarea id="result" rows="17" cols="80"></textarea>		
+                	      <textarea id="result" name="result" rows="17" cols="80"></textarea>		
                 	      </th> 
 	                  </tr>
                   </tbody>
-                </table>
+                </table> 
                 
-              </div>
+              </div>-->
+              
             </div>
+            
+            
           </div>
+          
+          
 
         </div>
-        <!-- /.container-fluid -->
-
+        	<!-- /.container-fluid -->
+        	
       </div>
       <!-- End of Main Content -->
 
@@ -181,30 +241,44 @@ $(document).ready(function(){
 		e.preventDefault();
 		searchForm.submit();
 	})
+	$('.searchTax').keyup(function(e){
+			
+		$('textarea[name=request]').val('');
+		$('textarea[name=result]').val('');
 
-	$('.searchTax').keyup(function(event){
-		if (window.event.keyCode != 13) {
-        	return;
-        }
+		if (window.event.keyCode != 13)	return;
 		if($('input[name=txprDscmNo]').val().length!==10){
 			alert("10자리를 입력해주세요")
 			return
 		}
 		
-		var txprDscmNo = $('input[name=txprDscmNo]').val();
-		//self.location='/homeTax/query_action?txprDscmNo='+txprDscmNo+'';
+		request();
+	})
+	
+	$('.searchTaxBtn').on('click',function(e){
 
+		$('textarea[name=request]').val('');
+		$('textarea[name=result]').val('');
+		if($('input[name=txprDscmNo]').val().length!==10){
+			alert("10자리를 입력해주세요")
+			return
+		}
+		request();
+		
+	})
+
+	function request(){
+		var txprDscmNo = $('input[name=txprDscmNo]').val();
 		var req={
 				actionsId: 'ATTABZAA001R08',
 				txprDscmNo: txprDscmNo
 		};
 		add(req, function(result){
-			console.log(result)
 			$('#request').val(JSON.stringify(req,null,4))
 			$('#result').val(JSON.stringify(result.map,null,4));
 			$('input[name=txprDscmNo]').val('');
 		})
-	})
+	}
 });
 function add(req,callback,error){
 	console.log("insert.........");
