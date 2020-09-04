@@ -14,7 +14,7 @@
 		  <li class="nav-item">
 	        <a class="nav-link" href="/dashBoard">
 	          <i class="fas fa-fw fa-tachometer-alt"></i>
-	          <span>Dashboard</span></a>
+	          <span class="font-weight-bolder">Dashboard</span></a>
 	      </li>
 	  </sec:authorize>
 

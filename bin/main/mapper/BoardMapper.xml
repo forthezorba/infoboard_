@@ -9,19 +9,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
     <select id="dashInfo" resultType="com.example.info.domain.DashInfo">
         SELECT 
-			(SELECT COUNT(bno) FROM board) AS totalBoard
-			,(SELECT COUNT(email) FROM bael_users) AS totalMember
-			,(SELECT COUNT(*) FROM board b,bael_users u 
-				WHERE b.writer=u.email
-				AND bno=ref
-				AND reply=0
-			) as unanswered
-			,(SELECT COUNT(*) FROM board b,bael_users u 
-				WHERE b.writer=u.email
-				AND date_format(b.reg_date,'%Y-%m-%d')=DATE(NOW())
-			) AS newboard
+	(SELECT COUNT(bno) FROM board) AS totalboard
+	,((SELECT COUNT(email) FROM bael_users)+(SELECT COUNT(email) FROM user)) AS totalMember
+	,(SELECT COUNT(*) FROM board WHERE reply=0) as unanswered
+	,(SELECT COUNT(*) FROM board 
+   	WHERE DATE_FORMAT(reg_date,'%Y-%m-%d')=DATE(NOW())
+	) AS newboard
 		FROM
-			DUAL;
+			DUAL 
     </select>
     
     <select id="boardCount" resultType="int">

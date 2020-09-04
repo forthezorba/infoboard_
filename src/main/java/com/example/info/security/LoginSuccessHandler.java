@@ -34,6 +34,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		log.info("success...");
 		try {
 			MemberVO user = memberService.read_member(authentication.getName());
+			System.out.println(user);
 			httpSession.setAttribute("user",new SessionUser(user));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

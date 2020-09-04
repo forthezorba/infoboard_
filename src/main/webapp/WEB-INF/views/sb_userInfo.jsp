@@ -104,6 +104,7 @@
                 ` --%>
                  	 
                  	 <c:if test="${user != null}">
+                 	 
                 	 <tr>
                      	<td>
 		                ${user.email}
