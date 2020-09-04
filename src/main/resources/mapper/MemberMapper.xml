@@ -7,8 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
     <insert id="insert_member">
        INSERT INTO
-        BAEL_USERS (NAME,EMAIL,PASSWORD)
-        VALUES(#{name},#{email},#{password}) 
+        BAEL_USERS (NAME,EMAIL,PASSWORD,REG_DATE)
+        VALUES(#{name},#{email},#{password},now()) 
     </insert>
     
     <insert id="insert_auth">
