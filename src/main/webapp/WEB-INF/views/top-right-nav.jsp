@@ -24,8 +24,9 @@
 						<li><a href="/user/signup">SignUp</a></li>
 					</sec:authorize> 
 					
-					<li>${user.name} 님</li> 
-					
+					<sec:authorize access="isAuthenticated()">
+					<li>${user.name}님</li> 
+					</sec:authorize>
 					
 					<sec:authorize access="isAuthenticated()">               
 						<form action="/user/logout" method="post" role="form"
