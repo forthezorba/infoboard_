@@ -50,11 +50,5 @@ dependencies {
     
     compileOnly("org.springframework.boot:spring-boot-devtools")
     
-
-
-    
 }
 
-test {
-	useJUnitPlatform()
-}
