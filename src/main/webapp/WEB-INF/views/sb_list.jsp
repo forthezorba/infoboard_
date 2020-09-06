@@ -187,7 +187,7 @@ vertical-align: baseline !important;
       
       
  		<!-- Modal -->
-           <div class="modal fade reply_modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+           <div class="modal fade reply_modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto;">
                <div class="modal-dialog">
                    <div class="modal-content">
 <!--                        <div class="modal-header">
