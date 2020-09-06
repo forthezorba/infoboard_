@@ -55,7 +55,7 @@ public class IndexContorller {
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		//System.out.println("upload path:"+uploadPath);
 		//System.out.println("uploadFolderPath:"+uploadFolderPath);
-		
+		System.out.println(uploadPath);
 		if(uploadPath.exists() == false) {
 			uploadPath.mkdirs();
 		}
