@@ -51,6 +51,7 @@ public class IndexContorller {
 		
 		List<AttachFileDTO> list= new ArrayList<>();
 		String uploadFolder="/image/upload";
+		//String uploadFolder="C:\\image\\upload"; //local
 		String uploadFolderPath = getFolder();
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		//System.out.println("upload path:"+uploadPath);
