@@ -228,7 +228,7 @@ vertical-align: baseline !important;
                            <!-- <button id='modalModBtn' type="button" class="btn btn-primary" data-dismiss="modal">수정</button> -->
                            <!-- <button id='modalRemoveBtn' type="button" class="btn btn-primary">삭제</button> -->
                            <button id='modalRegisterBtn' type="button" class="btn btn-primary">등록</button>
-                           <button id='modalCloseBtn' type="button" class="btn btn-primary">취소</button>
+                           <button id='modalCloseBtn' type="button" class="btn btn-secondary">취소</button>
                        </div>
                    </div>
                    <!-- /.modal-content -->

@@ -43,6 +43,10 @@
 	text-decoration:none;
 	cursor:pointer;
 }
+.read-form h4{
+	color: #369;
+    border-bottom: 1px solid #036;
+}
 
 </style>
 </head>
@@ -92,9 +96,9 @@
 	        <hr> -->
 	
 	        <!-- Post Content -->
-	        <p class="lead">
+	        <div class="card-body">
 	        ${detail.content} 
-	        </p>
+	        </div>
 	
 	        <blockquote class="blockquote">
 	          <footer class="blockquote-footer">
@@ -117,11 +121,12 @@
 			 
             <hr>
 	        <!-- Comments Form -->
-	        <h4>
-            	답변&nbsp;<i class="fas fa-hand-point-down"></i>
-	        </h4>
+	        
 			        
             <div class="mt-5 read-form">
+	            <h4>
+	            	답변&nbsp;<i class="fas fa-hand-point-down"></i>
+		        </h4>
 			        <div class="card my-4">
 			          <h5 class="card-header">
 			          <span class="re_title">${reply.title}</span>
@@ -130,7 +135,7 @@
 			      	  </small>
 			          </h5>
 			          
-			          <div class="card-body re_content" style="white-space: pre-line;">
+			          <div class="card-body re_content">
 			          	${reply.content}
 			          </div>
 			        </div>
@@ -330,13 +335,13 @@ $(document).ready(function(){
 
 		var str='';
 		
-		str += ""  
+		str += '<h4>답변&nbsp;<i class="fas fa-hand-point-down"></i></h4>'
 		str += '<div class="card my-4">'
 			str += '<h5 class="card-header">'  
 			str += '<span class="re_title">'+result.title+'</span>'  
 			str += '<small class="float-right text-muted">'+replyService.displayTime(result.reg_date)+'</small>'  
 			str += '</h5>'  
-			str += '<div class="card-body re_content" style="white-space: pre-line;">'+result.content+'</div>'  
+			str += '<div class="card-body re_content">'+result.content+'</div>'  
 		str += '</div>'  
 			str += '<div class="float-right write-form-btn">'  
 
