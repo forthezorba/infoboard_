@@ -50,7 +50,7 @@ public class IndexContorller {
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 		
 		List<AttachFileDTO> list= new ArrayList<>();
-		String uploadFolder="/image\\upload";
+		String uploadFolder="/image/upload";
 		String uploadFolderPath = getFolder();
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		//System.out.println("upload path:"+uploadPath);
