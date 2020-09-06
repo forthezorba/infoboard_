@@ -25,7 +25,7 @@
 
 <!-- Custom styles for this page -->
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+<!-- summernote -->
 <style>
 .top-right-nav{
 	width: 240px;
@@ -64,7 +64,7 @@
 	  <%@include file="top-right-nav.jsp" %>
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div class="container-fluid w-75">
 
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800 font-weight-bolder">문의사항</h1>
@@ -89,10 +89,15 @@
 		            <label for="name">작성자</label>
 		            <input type="text" class="form-control" id="name" name="name" value='${user.name}' readOnly>
 		          </div>
-		          <div class="form-group">
+		          <!-- <div class="form-group">
 		            <label for="content">내용</label>
 		            <textarea class="form-control" id="content" name="content" rows="10"></textarea> 
-		          </div>
+		          </div> -->
+		          <div class="form-group">
+			   		  <label>노트</label>
+			   		  <textarea id="summernote" class="form-control" name="content" rows="3"></textarea>
+			   	  </div>
+		          
 		          
 		       		<c:if test="${!empty detail}"> 
 						<input type="hidden"  id="bno" name="bno" value="${detail.bno}">
@@ -110,7 +115,7 @@
 
       </div>
       <!-- End of Main Content -->
-
+				  
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
@@ -126,6 +131,8 @@
 
   </div>
   <!-- End of Page Wrapper -->
+  
+		
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
@@ -147,6 +154,11 @@
 
   <!-- Page level custom scripts -->
   <script src="/js/demo/datatables-demo.js"></script>
+  
+  <!-- include summernote css/js -->
+  
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script>
 //logout
 $(document).ready(function(){
@@ -155,9 +167,9 @@ $(document).ready(function(){
 			e.preventDefault();
 			actionForm.submit();
 	})
-	
 });
 </script>
+<script src="/js/file.js"></script>
 </body>
 
 </html>

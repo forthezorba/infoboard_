@@ -24,7 +24,6 @@
 
   <!-- Custom styles for this page -->
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
 <style>
 .top-right-nav{
 	width: 240px;
@@ -90,6 +89,8 @@ vertical-align: baseline !important;
           <p class="mb-4">board</p>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
+          
+          	
          	 
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">   
@@ -125,7 +126,7 @@ vertical-align: baseline !important;
 				 	  	  </c:if>
 	                      
 	                      </td> 
-	                      <td class=''>
+	                      <td class='text_content'>
 						 	  <h5 class="font-weight-bold text-truncate" data-toggle="collapse" data-target="#collapse${l.bBno}"  style="cursor: pointer;">
 						 	  	${l.bSubject}
 						 	  </h5>
@@ -189,10 +190,9 @@ vertical-align: baseline !important;
            <div class="modal fade reply_modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                <div class="modal-dialog">
                    <div class="modal-content">
-                       <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                           <h4 class="modal-title" id="myModalLabel">Reply</h4>
-                       </div>
+<!--                        <div class="modal-header">
+                           <h4 class="modal-title" id="myModalLabel">확인</h4>
+                       </div> -->
                        <div class="modal-body">
                       		
                       		<c:if test="${user != null}">
@@ -211,10 +211,14 @@ vertical-align: baseline !important;
                       			<input class="form-control" id="title" name="title"/>
                       		</div>
                       		
-          		       		<div class="form-group">
+<!--           		       		<div class="form-group">
                       			<label>내용</label>
                       			<textarea class="form-control" id="content" name="content" rows="10"></textarea>
-                      		</div>
+                      		</div> -->
+                      		<div class="form-group">
+					   		    <label>노트</label>
+					   		    <textarea id="summernote" class="form-control" name="content" rows="3"></textarea>
+					   	    </div>
                       		
                        </div>
                        <input type='hidden' id='bno' name="bno">
@@ -232,6 +236,27 @@ vertical-align: baseline !important;
                <!-- /.modal-dialog -->
            </div>
   			<!-- /.modal -->
+  			
+  			
+		  <!--Message Modal -->
+          <div class="modal fade" id="myModal-msg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">성공</h4>
+                        </div>
+                        <div class="modal-body">
+                             	처리가 완료됐습니다.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
       
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
@@ -269,10 +294,24 @@ vertical-align: baseline !important;
   <!-- Page level custom scripts -->
   <script src="/js/demo/datatables-demo.js"></script>
   <script type="text/javascript" src="/js/reply.js"></script>
+  
 <script>
 //logout
 $(document).ready(function(){
 	var user = '<c:out value="${user.email}"/>';
+
+	var result = '<c:out value="${result}"/>';
+	checkModal(result);
+	history.replaceState({},null,null);
+	function checkModal(result){
+		if(result==='' || history.state){
+			return; 
+		}
+		if(parseInt(result)>0){
+			$('.modal-body').html('게시글 '+parseInt(result)+'번이 등록되었습니다.');
+		}
+		$('#myModal-msg').modal('show');
+	}
 	
 	var actionForm= $('#actionForm');
 	$('.logout_btn').on('click',function(e){
@@ -427,14 +466,9 @@ $(document).ready(function(){
 
 });
 </script>
-<script>
- 
-
- 
-
-
-
-</script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="/js/file.js"></script>
 </body>
 
 </html>

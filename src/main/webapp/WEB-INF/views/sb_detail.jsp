@@ -25,7 +25,7 @@
 
   <!-- Custom styles for this page -->
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+  
 <style>
 .top-right-nav{
 	width: 240px;
@@ -93,7 +93,7 @@
 	
 	        <!-- Post Content -->
 	        <p class="lead">
-	        <c:out value="${detail.content}" /> 
+	        ${detail.content} 
 	        </p>
 	
 	        <blockquote class="blockquote">
@@ -115,14 +115,13 @@
 				</div> 
 			</div>
 			 
-            
-            <div class="mt-5 read-form">
-				 <hr>
-			        <!-- Comments Form -->
-			        <h4>
-		            	답변&nbsp;<i class="fas fa-hand-point-down"></i>
-			        </h4>
+            <hr>
+	        <!-- Comments Form -->
+	        <h4>
+            	답변&nbsp;<i class="fas fa-hand-point-down"></i>
+	        </h4>
 			        
+            <div class="mt-5 read-form">
 			        <div class="card my-4">
 			          <h5 class="card-header">
 			          <span class="re_title">${reply.title}</span>
@@ -132,8 +131,7 @@
 			          </h5>
 			          
 			          <div class="card-body re_content" style="white-space: pre-line;">
-			          	<c:out value="${reply.content}" />
-
+			          	${reply.content}
 			          </div>
 			        </div>
 					<div class="float-right write-form-btn">				
@@ -151,9 +149,12 @@
 			          <div class="card-header">
 			            <form>
 			              <div class="form-group">
-			               <label for="content">내용</label>
-			               <textarea class="form-control" rows="7" id="content" name="content"></textarea>
+			               <!-- <label for="content">내용</label>
+			               <textarea class="form-control" rows="7" id="content" name="content"></textarea> -->
+			               <label>노트</label>
+			   		 	   <textarea id="summernote" class="form-control" name="content" rows="3"></textarea>
 			              </div>
+			              
 			              <button type="button" class="btn btn-primary addReplyBtn"  data-bno="${detail.bno}" data-rno="${reply.rno}">등록</button>
 			              <button type="button" class="btn btn-secondary cancelReplyBtn"  data-bno="${detail.bno}" data-rno="${reply.rno}">취소</button>
 			            </form>
@@ -312,14 +313,15 @@ $(document).ready(function(){
 	$('.read-form').on('click','.modReplyBtn',function(e){
 		var rno=$(this).data('rno');
 		var title = $(this).parents().find('.re_title').text().trim();
-		var content = $(this).parents().find('.re_content').text().trim();
-
+		var content = $('.re_content').html();
+		console.log(content)
 		$('.read-form').hide();
 		$('.write-form').show();
 		$('.write-form .addReplyBtn').attr('data-rno',rno)
 		$('.write-form .cancelReplyBtn').attr('data-rno',rno)
 		$('.write-form #title').val(title);
-		$('.write-form #content').val(content);
+		//$('.write-form #summernote').val(content);
+		$('.write-form #summernote').summernote('code',content)
 	})
 	
 
@@ -328,7 +330,7 @@ $(document).ready(function(){
 
 		var str='';
 		
-		str += "<hr><h4>답변&nbsp;<i class='fas fa-hand-point-down'></i></h4>"  
+		str += ""  
 		str += '<div class="card my-4">'
 			str += '<h5 class="card-header">'  
 			str += '<span class="re_title">'+result.title+'</span>'  
@@ -356,6 +358,9 @@ $(document).ready(function(){
 	}
 });
 </script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="/js/file.js"></script>
 </body>
 </html>
 

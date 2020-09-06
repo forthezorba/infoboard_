@@ -2,7 +2,6 @@ package com.example.info.web;
 
 import java.security.Principal;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,13 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.info.domain.BoardVO;
 import com.example.info.domain.Criteria;
 import com.example.info.domain.ReplyVO;
 import com.example.info.security.SessionUser;
 import com.example.info.service.BoardService;
-import com.example.info.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
@@ -106,7 +105,8 @@ public class BoardController {
     }
     
     @RequestMapping("/insertProc")
-    private String boardInsertProc(@RequestParam(required = false, defaultValue="0") int bno, HttpServletRequest request) throws Exception{
+    private String boardInsertProc(@RequestParam(required = false, defaultValue="0") int bno, 
+    		HttpServletRequest request,RedirectAttributes rttr) throws Exception{
         
         BoardVO board = new BoardVO();
         
@@ -115,7 +115,6 @@ public class BoardController {
         board.setWriter(request.getParameter("writer"));
         board.setName(request.getParameter("name"));
         
-        System.out.println(bno);
         if(bno!=0) {
         	//´äº¯
             board.setRef(bno);
@@ -126,7 +125,7 @@ public class BoardController {
         	mBoardService.boardInsertService(board);
         }
         
-        System.out.println(board);
+		rttr.addFlashAttribute("result",board.getRef());
         
         return "redirect:/";
     }
@@ -150,6 +149,8 @@ public class BoardController {
         board.setBno(Integer.parseInt(request.getParameter("bno")));
         
         mBoardService.boardUpdateService(board);
+        
+        System.out.println(board.getContent());
         
         return "redirect:/detail/"+request.getParameter("bno"); 
     }

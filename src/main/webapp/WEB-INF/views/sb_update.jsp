@@ -25,7 +25,6 @@
 
   <!-- Custom styles for this page -->
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
 <style>
 .top-right-nav{
 	width: 240px;
@@ -89,10 +88,14 @@
 		            <label for="name">작성자</label>
 		            <input type="text" class="form-control" id="name" name="name" value="${user.name}" readOnly>
 		          </div>
-		          <div class="form-group">
+<%-- 		          <div class="form-group">
 		            <label for="content">내용</label>
 		            <textarea class="form-control" id="content" name="content" rows="10">${detail.content}</textarea>
-		          </div>
+		          </div> --%>
+		          <div class="form-group">
+			   		  <label>노트</label>
+			   		  <textarea id="summernote" class="form-control" name="content" rows="3">${detail.content}</textarea>
+			   	  </div>
 		          <input type="hidden" name="bno" value="${detail.bno}"/>
 		          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		          <button type="submit" class="btn btn-primary btn-sm" style="float:right;">수정</button>
@@ -143,6 +146,11 @@
 
   <!-- Page level custom scripts -->
   <script src="/js/demo/datatables-demo.js"></script>
+    <!-- include summernote css/js -->
+  
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="/js/file.js"></script>
 </body>
 
 </html>
